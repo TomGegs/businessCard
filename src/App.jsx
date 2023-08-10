@@ -8,8 +8,8 @@ function App() {
         <BrowserRouter>
             <div className="flex flex-col  w-screen h-screen max-w-[560px] mx-auto">
                 <Routes>
-                    <Route exact path="/" element={<About />} />
-                    <Route path="/skills" element={<Skill />} />
+                    <Route path="/" element={<Skill />} />
+                    <Route exact path="/about" element={<About />} />
                     <Route path="/contact" element={<Contact />} />
                 </Routes>
             </div>
