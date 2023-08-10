@@ -3,7 +3,7 @@ const IconButtons = ({ iconName, url }) => {
         <button
             type="button"
             onClick={() => window.open(url, "_blank")}
-            className="border border-blue-400 rounded-full p-3 text-blue-400 hover:text-purple-400 hover:border-purple-400 focus:border-purple-400 transition-all duration-500">
+            className="rounded-full px-2 pt-2 text-lg text-primary hover:text-altSecond transition-all duration-500">
             {iconName}
         </button>
     );

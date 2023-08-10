@@ -1,106 +1,80 @@
+@import url("https://fonts.googleapis.com/css2?family=Alexandria:wght@100;200;300;400;500;600;700;800&family=Candal&family=Capriola&family=Julius+Sans+One&family=Jura:wght@300;400;500;600;700&family=Lalezar&family=Nanum+Pen+Script&family=Poppins:wght@100;200;300;400;500&family=Readex+Pro:wght@200;300;400;500;600;700&family=Syncopate&family=Unbounded:wght@200;300;400;500;600;700;800;900&display=swap");
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-/* 
+
 :root {
-    font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
-    line-height: 1.5;
-    font-weight: 400;
-
-    color-scheme: light dark;
-    color: rgba(255, 255, 255, 0.87);
-
-    font-synthesis: none;
-    text-rendering: optimizeLegibility;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    -webkit-text-size-adjust: 100%;
+    --primary: hsl(187, 77%, 45%);
+    --secondary: hsl(259, 88%, 64%);
+    --tertiary: hsl(174, 88%, 38%);
+    --black: hsl(240, 4%, 16%);
+    --distance: -5px;
 }
 
-a {
-    font-weight: 500;
-    color: #646cff;
-    text-decoration: inherit;
-}
-a:hover {
-    color: #535bf2;
-}
-
+/* adjust body colours */
 body {
-    margin: 0;
+    background-color: var(--black);
+    background-image: conic-gradient(
+        from 0deg at 50% 40%,
+        var(--primary),
+        var(--secondary),
+        var(--black),
+        var(--black),
+        var(--black),
+        var(--primary),
+        var(--primary)
+    );
+    background-blend-mode: multiply;
+}
+
+/* 3D-card wrapper */
+pre {
     display: flex;
-    place-items: center;
-    min-width: 320px;
-    min-height: 100vh;
-}
- */
-h1 {
+    flex-direction: column;
+    width: 85%;
     color: white;
-    font-size: 14vw;
-    line-height: 1.1;
-    font-weight: 300;
+    /* fix */
+    background: var(--black);
+    padding: 16px;
+    border-radius: 1rem;
+    position: relative;
+    transform-style: preserve-3d;
+    transform: perspective(5000px) rotateY(var(--rotateX))
+        rotateX(var(--rotateY));
 }
 
-h2 {
-    color: white;
-    font-size: 8vw;
-    line-height: 1.1;
-    font-weight: 300;
-}
-/* 
-button {
-    border-radius: 8px;
-    border: 1px solid transparent;
-    padding: 0.6em 1.2em;
-    font-size: 1em;
-    font-weight: 500;
-    font-family: inherit;
-    background-color: #1a1a1a;
-    cursor: pointer;
-    transition: border-color 0.25s;
-}
-button:hover {
-    border-color: #646cff;
-}
-button:focus,
-button:focus-visible {
-    outline: 4px auto -webkit-focus-ring-color;
+pre > * {
+    text-shadow: 0 0 0.3em currentColor;
 }
 
-
-@media (prefers-color-scheme: light) {
-    :root {
-        color: #213547;
-        background-color: #ffffff;
-    }
-    a:hover {
-        color: #747bff;
-    }
-    button {
-        background-color: #f9f9f9;
-    }
+pre::before,
+pre::after {
+    content: "";
+    position: absolute;
+    border-radius: inherit;
 }
 
+/* shadow */
+pre::before {
+    inset: 0.75rem;
+    border-radius: inherit;
+    background: black;
+    z-index: -1;
+    transform: translateZ(var(--distance));
+    filter: blur(15px);
+    opacity: 0.5;
+}
 
-
-@keyframes logo-spin {
-    from {
-      transform: rotate(0deg);
-    }
-    to {
-      transform: rotate(360deg);
-    }
-  }
-  
-  @media (prefers-reduced-motion: no-preference) {
-    a:nth-of-type(2) .logo {
-      animation: logo-spin infinite 20s linear;
-    }
-  }
-  
-  .card {
-    padding: 2em;
-  }
-  
-  
-   */
+/* backdrop panel */
+pre::after {
+    z-index: -2;
+    inset: -0.5rem;
+    /* fix */
+    background: linear-gradient(
+        -45deg,
+        var(--primary),
+        var(--secondary),
+        var(--tertiary)
+    );
+    transform: translateZ(var(--distance));
+}
