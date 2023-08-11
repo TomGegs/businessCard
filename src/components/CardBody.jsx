@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import logoIcon from "/assets/images/logoIcon.svg";
 
 import { FaLinkedinIn, FaLaptopCode } from "react-icons/fa";
+import { AiOutlineDoubleLeft, AiOutlineDoubleRight } from "react-icons/ai";
 import IconButtons from "./buttons/IconButtons";
 
 const CardBody = () => {
@@ -13,6 +14,9 @@ const CardBody = () => {
     const [currentInTextIndex, setCurrentInTextIndex] = useState(2);
     const [currentOutTextIndex, setCurrentOutTextIndex] = useState(1);
     const [prevTextIndex, setPrevTextIndex] = useState(0);
+
+    const [flip, setFlip] = useState(false);
+    const [flipBack, setFlipBack] = useState(false);
 
     const loopText = [
         "React Developer",
@@ -49,9 +53,11 @@ const CardBody = () => {
             ? event.touches[0].clientY
             : event.clientY;
 
+        // Calculate the middle of the screen
         const middleX = window.innerWidth / 2;
         const middleY = window.innerHeight / 2;
 
+        // Calculate the offset of the mouse pointer/finger from the middle of the screen
         const offsetX = ((clientX - middleX) / middleX) * 25;
         const offsetY = ((clientY - middleY) / middleY) * 25;
 
@@ -80,25 +86,38 @@ const CardBody = () => {
         "--rotateY": `${rotateStyles.rotateY}deg`,
     };
 
+    const clickFlip = {
+        "--rotateX": `180deg`,
+        "--rotateY": `0deg`,
+        transition: "transform 1s",
+    };
+    const clickFlipBack = {
+        "--rotateX": `-180deg`,
+        "--rotateY": `0deg`,
+        transition: "transform 1s",
+    };
+
     return (
         //wrapper
-        <pre tabIndex="0" style={style}>
-            {/* headers */}
-            <section className="font-Unbounded tracking-tighter flex flex-col shrink flex-1 text-base md:text-lg select-none">
-                <div className="flex text-xs flex-col w-full justify-between">
-                    <p className="text-2xl whitespace-normal uppercase ">
-                        Tom Geoghegan
-                    </p>
-                </div>
-                {/* loop text container */}
-                <div className="flex flex-row font-light">
+        <pre
+            tabIndex="0"
+            style={flip ? clickFlip : flipBack ? clickFlipBack : style}
+            className="card font-Unbounded">
+            {/* Front of card */}
+            <section className="tracking-tighter flex flex-col text-base md:text-lg front ">
+                {/* header */}
+                <p className="text-2xl whitespace-normal uppercase [text-shadow:_0_0_0.3em_currentColor]">
+                    Tom Geoghegan
+                </p>
+                {/* looping subheader and logo*/}
+                <div className="flex flex-row select-none ">
                     <img
                         src={logoIcon}
                         alt="logo icon on business card"
                         className="w-12 mr-4 flex"
                     />
-                    {/* Queued text */}
-                    <div>
+                    <div className="font-light overflow-visible min-w-[150px]">
+                        {/* Queued text */}
                         {loopText.map((text, index) => (
                             <p
                                 key={index}
@@ -151,24 +170,45 @@ const CardBody = () => {
                         ))}
                     </div>
                 </div>
+                <div className="flex flex-row flex-wrap mt-2 font-Unbounded text-xs font-light justify-between">
+                    <div className="flex flex-col">
+                        <p>tomgegs@outlook.com</p>
+                        <p>0407 250 035</p>
+                    </div>
+                    <div>
+                        <IconButtons
+                            iconName={<FaLinkedinIn />}
+                            url="https://www.linkedin.com/in/tomgeoghegan/"
+                        />
+                        <IconButtons
+                            iconName={<FaLaptopCode />}
+                            url="https://tomg-portfolio.netlify.app/"
+                        />
+                        <IconButtons
+                            noNewTab={true}
+                            iconName={
+                                <AiOutlineDoubleRight
+                                    className="animate-pulse"
+                                    onClick={() => setFlip(!flip)}
+                                />
+                            }
+                        />
+                    </div>
+                </div>
             </section>
-
-            {/*Contact Details */}
-            <section className="flex flex-row flex-wrap mt-2 font-Unbounded text-xs font-light justify-between">
-                <div>
-                    <p>tomgegs@outlook.com</p>
-                    <p>0407 250 035</p>
-                </div>
-                <div>
-                    <IconButtons
-                        iconName={<FaLinkedinIn />}
-                        url="https://www.linkedin.com/in/tomgeoghegan/"
-                    />
-                    <IconButtons
-                        iconName={<FaLaptopCode />}
-                        url="https://tomg-portfolio.netlify.app/"
-                    />
-                </div>
+            {/* holo middle panel */}
+            <section className="middle"></section>
+            {/* Back of card */}
+            <section className="back">
+                <IconButtons
+                    noNewTab={true}
+                    iconName={
+                        <AiOutlineDoubleLeft
+                            className="animate-pulse"
+                            onClick={() => setFlipBack(!flipBack)}
+                        />
+                    }
+                />
             </section>
         </pre>
     );

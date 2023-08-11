@@ -1,9 +1,12 @@
-const IconButtons = ({ iconName, url }) => {
+const IconButtons = ({ iconName, url, noNewTab }) => {
+    const openNewTab = () => {
+        window.open(url, "_blank");
+    };
     return (
         <button
             type="button"
-            onClick={() => window.open(url, "_blank")}
-            className="rounded-full px-2 pt-2 text-lg text-primary hover:text-altSecond transition-all duration-500">
+            onClick={noNewTab ? null : openNewTab}
+            className="rounded-full px-2 pt-2 text-xl text-primary hover:text-altSecond transition-all duration-500">
             {iconName}
         </button>
     );

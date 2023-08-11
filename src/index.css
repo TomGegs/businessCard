@@ -8,10 +8,11 @@
     --secondary: hsl(259, 88%, 64%);
     --tertiary: hsl(174, 88%, 38%);
     --black: hsl(240, 4%, 16%);
-    --distance: -5px;
+    --distanceFront: -15px;
+    --distanceBack: calc(var(--distanceFront) * -2);
+    font-family: "Unbounded", cursive;
 }
 
-/* adjust body colours */
 body {
     background-color: var(--black);
     background-image: conic-gradient(
@@ -26,55 +27,63 @@ body {
     );
     background-blend-mode: multiply;
 }
-
-/* 3D-card wrapper */
-pre {
+.card {
+    position: absolute;
     display: flex;
     flex-direction: column;
     width: 85%;
     color: white;
-    /* fix */
     background: var(--black);
+    border-radius: 16px;
     padding: 16px;
-    border-radius: 1rem;
-    position: relative;
     transform-style: preserve-3d;
     transform: perspective(5000px) rotateY(var(--rotateX))
         rotateX(var(--rotateY));
 }
 
-pre > * {
-    text-shadow: 0 0 0.3em currentColor;
-}
-
-pre::before,
-pre::after {
+.card::before,
+.card::after {
     content: "";
     position: absolute;
     border-radius: inherit;
 }
 
-/* shadow */
-pre::before {
-    inset: 0.75rem;
+.card::before {
+    inset: 0.5rem;
     border-radius: inherit;
     background: black;
     z-index: -1;
-    transform: translateZ(var(--distance));
+    transform: translateZ(var(--distanceFront));
     filter: blur(15px);
-    opacity: 0.5;
+    opacity: 0.2;
 }
 
-/* backdrop panel */
-pre::after {
+.card .middle {
+    position: absolute;
+    border-radius: inherit;
     z-index: -2;
     inset: -0.5rem;
-    /* fix */
     background: linear-gradient(
         -45deg,
         var(--primary),
         var(--secondary),
         var(--tertiary)
     );
-    transform: translateZ(var(--distance));
+    transform: translateZ(var(--distanceFront));
+}
+
+.card .front,
+.card .back {
+    backface-visibility: hidden;
+}
+
+.card .back {
+    position: absolute;
+    inset: 0rem;
+    transform: rotateY(180deg) translateZ(var(--distanceBack));
+    border-radius: inherit;
+    padding: inherit;
+    background: var(--black);
+    z-index: -1;
+    transform-style: preserve-3d;
 }
