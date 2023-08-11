@@ -65,7 +65,7 @@ const CardBody = () => {
     // Add and remove the event listener
     useEffect(() => {
         const eventHandler =
-            "ontouchstart" in window ? "touchend" : "mousemove";
+            "ontouchstart" in window ? "touchmove" : "mousemove";
 
         document.addEventListener(eventHandler, rotateElement);
 
@@ -84,7 +84,7 @@ const CardBody = () => {
         //wrapper
         <pre tabIndex="0" style={style}>
             {/* headers */}
-            <div className="font-Unbounded tracking-tighter flex flex-col shrink flex-1 text-base md:text-lg select-none">
+            <section className="font-Unbounded tracking-tighter flex flex-col shrink flex-1 text-base md:text-lg select-none">
                 <div className="flex text-xs flex-col w-full justify-between">
                     <p className="text-2xl whitespace-normal uppercase ">
                         Tom Geoghegan
@@ -151,10 +151,10 @@ const CardBody = () => {
                         ))}
                     </div>
                 </div>
-            </div>
+            </section>
 
             {/*Contact Details */}
-            <div className="flex flex-row flex-wrap mt-2 font-Unbounded text-xs font-light justify-between">
+            <section className="flex flex-row flex-wrap mt-2 font-Unbounded text-xs font-light justify-between">
                 <div>
                     <p>tomgegs@outlook.com</p>
                     <p>0407 250 035</p>
@@ -169,7 +169,7 @@ const CardBody = () => {
                         url="https://tomg-portfolio.netlify.app/"
                     />
                 </div>
-            </div>
+            </section>
         </pre>
     );
 };
