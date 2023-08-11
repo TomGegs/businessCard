@@ -39,17 +39,21 @@ const CardBody = () => {
         return () => clearInterval(textIndexInterval);
     }, [loopText.length]);
 
-    //Mouse location tracking
-    // Function to update rotation styles based on mouse position
+    //Location tracking
+    // Function to update rotation styles based on mouse position or finger movement
     const rotateElement = (event) => {
-        const x = event.clientX;
-        const y = event.clientY;
+        const clientX = event.touches
+            ? event.touches[0].clientX
+            : event.clientX;
+        const clientY = event.touches
+            ? event.touches[0].clientY
+            : event.clientY;
 
         const middleX = window.innerWidth / 2;
         const middleY = window.innerHeight / 2;
 
-        const offsetX = ((x - middleX) / middleX) * 25;
-        const offsetY = ((y - middleY) / middleY) * 25;
+        const offsetX = ((clientX - middleX) / middleX) * 25;
+        const offsetY = ((clientY - middleY) / middleY) * 25;
 
         // Update the state with new rotation values
         setRotateStyles({
@@ -58,12 +62,15 @@ const CardBody = () => {
         });
     };
 
-    // Add and remove the mousemove event listener
+    // Add and remove the event listener
     useEffect(() => {
-        document.addEventListener("mousemove", rotateElement);
+        const eventHandler =
+            "ontouchstart" in window ? "touchend" : "mousemove";
+
+        document.addEventListener(eventHandler, rotateElement);
 
         return () => {
-            document.removeEventListener("mousemove", rotateElement);
+            document.removeEventListener(eventHandler, rotateElement);
         };
     }, []); //Empty array so effect runs only on mount
 
