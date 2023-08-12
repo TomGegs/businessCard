@@ -1,47 +1,17 @@
-import { useState, useEffect } from "react";
-import logoIcon from "/assets/images/logoIcon.svg";
+import { useState, useEffect, useRef } from "react";
 
-import { FaLinkedinIn, FaLaptopCode } from "react-icons/fa";
-import { AiOutlineDoubleLeft, AiOutlineDoubleRight } from "react-icons/ai";
-import IconButtons from "./buttons/IconButtons";
+import BackOfCard from "./BackOfCard";
+import FrontOfCard from "./FrontOfCard";
 
 const CardBody = () => {
     const [rotateStyles, setRotateStyles] = useState({
         rotateX: 0,
         rotateY: 0,
     });
-    const [nextTextIndex, setNextTextIndex] = useState(3);
-    const [currentInTextIndex, setCurrentInTextIndex] = useState(2);
-    const [currentOutTextIndex, setCurrentOutTextIndex] = useState(1);
-    const [prevTextIndex, setPrevTextIndex] = useState(0);
 
     const [flip, setFlip] = useState(false);
-    const [flipBack, setFlipBack] = useState(false);
 
-    const loopText = [
-        "React Developer",
-        "Web Developer",
-        "Product Manager",
-        "Growth Manager",
-        "Digital Marketer",
-        "Entrepreneur",
-    ];
-
-    //Loop through loopText array
-    useEffect(() => {
-        const textIndexInterval = setInterval(() => {
-            setNextTextIndex((prevIndex) => (prevIndex + 1) % loopText.length);
-            setCurrentInTextIndex(
-                (prevIndex) => (prevIndex + 1) % loopText.length
-            );
-            setCurrentOutTextIndex(
-                (prevIndex) => (prevIndex + 1) % loopText.length
-            );
-            setPrevTextIndex((prevIndex) => (prevIndex + 1) % loopText.length);
-        }, 1500);
-
-        return () => clearInterval(textIndexInterval);
-    }, [loopText.length]);
+    const [cardHeight, setCardHeight] = useState("initial");
 
     //Location tracking
     // Function to update rotation styles based on mouse position or finger movement
@@ -58,8 +28,8 @@ const CardBody = () => {
         const middleY = window.innerHeight / 2;
 
         // Calculate the offset of the mouse pointer/finger from the middle of the screen
-        const offsetX = ((clientX - middleX) / middleX) * 25;
-        const offsetY = ((clientY - middleY) / middleY) * 25;
+        const offsetX = ((clientX - middleX) / middleX) * 20;
+        const offsetY = ((clientY - middleY) / middleY) * 20;
 
         // Update the state with new rotation values
         setRotateStyles({
@@ -81,7 +51,7 @@ const CardBody = () => {
     }, []); //Empty array so effect runs only on mount
 
     // Create a style object with the rotation values
-    const style = {
+    const rotateStyle = {
         "--rotateX": `${rotateStyles.rotateX}deg`,
         "--rotateY": `${rotateStyles.rotateY}deg`,
     };
@@ -91,124 +61,50 @@ const CardBody = () => {
         "--rotateY": `0deg`,
         transition: "transform 1s",
     };
-    const clickFlipBack = {
-        "--rotateX": `-180deg`,
-        "--rotateY": `0deg`,
-        transition: "transform 1s",
+
+    // const clickFlipBack = {
+    //     "--rotateX": `-180deg`,
+    //     "--rotateY": `0deg`,
+    //     transition: "transform 1s",
+    // };
+    //style logic for card flip
+    const flipStyle = () => {
+        if (flip) {
+            return clickFlip;
+        } else {
+            return rotateStyle;
+        }
     };
+
+    // Front size of card height adjusts to content and window size and resizes middle and back of card
+    const frontSide = useRef();
+
+    const setHeight = () => {
+        const frontHeight = frontSide.current.getBoundingClientRect().height;
+        setCardHeight(Math.max(frontHeight, 200));
+    };
+
+    useEffect(setHeight, [frontSide]);
+    useEffect(() => {
+        window.addEventListener("resize", setHeight);
+        return () => window.removeEventListener("resize", setHeight);
+    }, []);
 
     return (
         //wrapper
         <pre
             tabIndex="0"
-            style={flip ? clickFlip : flipBack ? clickFlipBack : style}
-            className="card font-Unbounded">
+            style={{ ...flipStyle(), height: cardHeight }}
+            className={`card font-Unbounded ${flip ? "flip" : ""}`}>
             {/* Front of card */}
-            <section className="tracking-tighter flex flex-col text-base md:text-lg front ">
-                {/* header */}
-                <p className="text-2xl whitespace-normal uppercase [text-shadow:_0_0_0.3em_currentColor]">
-                    Tom Geoghegan
-                </p>
-                {/* looping subheader and logo*/}
-                <div className="flex flex-row select-none ">
-                    <img
-                        src={logoIcon}
-                        alt="logo icon on business card"
-                        className="w-12 mr-4 flex"
-                    />
-                    <div className="font-light overflow-visible min-w-[150px]">
-                        {/* Queued text */}
-                        {loopText.map((text, index) => (
-                            <p
-                                key={index}
-                                className={`${
-                                    nextTextIndex === index
-                                        ? "animate-appearText "
-                                        : "hidden"
-                                }`}>
-                                {text}
-                            </p>
-                        ))}
-
-                        {/* Current text - animated 'in' */}
-                        {loopText.map((text, index) => (
-                            <p
-                                key={index}
-                                className={`${
-                                    currentInTextIndex === index
-                                        ? "animate-slideInText"
-                                        : "hidden"
-                                }`}>
-                                {text}
-                            </p>
-                        ))}
-
-                        {/* Current text- animated 'out' */}
-                        {loopText.map((text, index) => (
-                            <p
-                                key={index}
-                                className={`${
-                                    currentOutTextIndex === index
-                                        ? "animate-slideOutText"
-                                        : "hidden"
-                                }`}>
-                                {text}
-                            </p>
-                        ))}
-
-                        {/* Previous text */}
-                        {loopText.map((text, index) => (
-                            <p
-                                key={index}
-                                className={`${
-                                    prevTextIndex === index
-                                        ? "animate-disappearText"
-                                        : "hidden"
-                                }`}>
-                                {text}
-                            </p>
-                        ))}
-                    </div>
-                </div>
-                <div className="flex flex-row flex-wrap mt-2 font-Unbounded text-xs font-light justify-between">
-                    <div className="flex flex-col">
-                        <p>tomgegs@outlook.com</p>
-                        <p>0407 250 035</p>
-                    </div>
-                    <div>
-                        <IconButtons
-                            iconName={<FaLinkedinIn />}
-                            url="https://www.linkedin.com/in/tomgeoghegan/"
-                        />
-                        <IconButtons
-                            iconName={<FaLaptopCode />}
-                            url="https://tomg-portfolio.netlify.app/"
-                        />
-                        <IconButtons
-                            noNewTab={true}
-                            iconName={
-                                <AiOutlineDoubleRight
-                                    className="animate-pulse"
-                                    onClick={() => setFlip(!flip)}
-                                />
-                            }
-                        />
-                    </div>
-                </div>
+            <section className="front" ref={frontSide}>
+                <FrontOfCard flipCard={() => setFlip(!flip)} />
             </section>
             {/* holo middle panel */}
-            <section className="middle"></section>
+            <section className="middle" />
             {/* Back of card */}
-            <section className="back">
-                <IconButtons
-                    noNewTab={true}
-                    iconName={
-                        <AiOutlineDoubleLeft
-                            className="animate-pulse"
-                            onClick={() => setFlipBack(!flipBack)}
-                        />
-                    }
-                />
+            <section className="back" style={{ height: cardHeight }}>
+                <BackOfCard onFlipBack={() => setFlip(!flip)} />
             </section>
         </pre>
     );

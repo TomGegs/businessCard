@@ -1,4 +1,3 @@
-import { BsFillPersonPlusFill } from "react-icons/bs";
 import CardBody from "../../components/CardBody";
 
 const Skill = () => {

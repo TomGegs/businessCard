@@ -8,8 +8,9 @@
     --secondary: hsl(259, 88%, 64%);
     --tertiary: hsl(174, 88%, 38%);
     --black: hsl(240, 4%, 16%);
-    --distanceFront: -15px;
-    --distanceBack: calc(var(--distanceFront) * -2);
+    --distanceFront: 15px;
+    --distanceMiddle: 0px;
+    --distanceBack: 15px;
     font-family: "Unbounded", cursive;
 }
 
@@ -28,17 +29,22 @@ body {
     background-blend-mode: multiply;
 }
 .card {
-    position: absolute;
+    position: relative;
     display: flex;
     flex-direction: column;
     width: 85%;
     color: white;
-    background: var(--black);
     border-radius: 16px;
     padding: 16px;
     transform-style: preserve-3d;
-    transform: perspective(5000px) rotateY(var(--rotateX))
+    transform: perspective(5000px) rotateY(var(--rotateX, 0))
         rotateX(var(--rotateY));
+}
+
+.card.flip {
+    --rotateX: 180deg;
+    --rotateY: 0deg;
+    transition: "transform 1s";
 }
 
 .card::before,
@@ -48,14 +54,25 @@ body {
     border-radius: inherit;
 }
 
-.card::before {
-    inset: 0.5rem;
+.card .front,
+.card .back {
+    height: fit-content;
+    position: absolute;
+    inset: 0rem;
     border-radius: inherit;
-    background: black;
-    z-index: -1;
-    transform: translateZ(var(--distanceFront));
-    filter: blur(15px);
-    opacity: 0.2;
+    padding: inherit;
+    background: var(--black);
+    transform-style: preserve-3d;
+    backface-visibility: hidden;
+}
+
+.card .front {
+    transform: rotateY(0deg) translateZ(var(--distanceFront));
+}
+
+.card .back {
+    transform: rotateY(180deg) translateZ(var(--distanceBack));
+    z-index: 1;
 }
 
 .card .middle {
@@ -69,21 +86,5 @@ body {
         var(--secondary),
         var(--tertiary)
     );
-    transform: translateZ(var(--distanceFront));
-}
-
-.card .front,
-.card .back {
-    backface-visibility: hidden;
-}
-
-.card .back {
-    position: absolute;
-    inset: 0rem;
-    transform: rotateY(180deg) translateZ(var(--distanceBack));
-    border-radius: inherit;
-    padding: inherit;
-    background: var(--black);
-    z-index: -1;
-    transform-style: preserve-3d;
+    transform: translateZ(var(--distanceMiddle));
 }
