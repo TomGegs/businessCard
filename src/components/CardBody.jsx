@@ -86,7 +86,8 @@ function CardBody() {
 
     return (
         // wrapper
-        <pre
+        <div
+            role="button"
             tabIndex="0"
             style={{ ...flipStyle(), height: cardHeight }}
             className={`card font-Unbounded ${flip ? 'flip' : ''}`}
@@ -101,7 +102,7 @@ function CardBody() {
             <section className="back" style={{ height: cardHeight }}>
                 <BackOfCard onFlipBack={() => setFlip(!flip)} />
             </section>
-        </pre>
+        </div>
     );
 }
 

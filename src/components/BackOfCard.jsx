@@ -2,6 +2,11 @@ import { AiOutlineDoubleLeft } from 'react-icons/ai';
 import IconButtons from './buttons/IconButtons';
 
 function BackOfCard({ onFlipBack }) {
+    const handleClick = () => {
+        console.log('Button clicked');
+        onFlipBack();
+    };
+
     return (
         <div className="h-full ">
             <IconButtons
@@ -9,7 +14,7 @@ function BackOfCard({ onFlipBack }) {
                 iconName={
                     <AiOutlineDoubleLeft
                         className="animate-pulse"
-                        onClick={onFlipBack}
+                        onClick={handleClick}
                     />
                 }
             />
