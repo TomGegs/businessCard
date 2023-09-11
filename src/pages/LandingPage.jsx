@@ -1,11 +1,11 @@
-import CardBody from "../components/CardBody";
-import ContactDownloadButton from "../components/ContactDownloadButton";
+import CardBody from '../components/CardBody';
+import ContactDownloadButton from '../components/ContactDownloadButton';
 
 const LandingPage = () => {
     return (
-        <main className="h-full w-full relative items-center mx-auto flex-col justify-center flex">
+        <main className="relative mx-auto flex h-full w-full flex-col items-center justify-center">
             <CardBody />
-            <section className="relative h-[40%] flex flex-col justify-center mx-auto ">
+            <section className="relative mx-auto flex h-[40%] flex-col justify-center ">
                 <ContactDownloadButton />
             </section>
         </main>

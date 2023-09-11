@@ -1,19 +1,22 @@
-import { BsFillPersonPlusFill } from "react-icons/bs";
+import { BsFillPersonPlusFill } from 'react-icons/bs';
 
-const About = () => {
+function About() {
     return (
-        <div className="h-[calc(100dvh-64px)] w-full text-center flex flex-col justify-center">
-            <h1 className="uppercase max-[320px]:text-[2rem] text-[2.5rem] text-white font-Unbounded">
+        <div className="flex h-[calc(100dvh-64px)] w-full flex-col justify-center text-center">
+            <h1 className="font-Unbounded text-[2.5rem] uppercase text-white max-[320px]:text-[2rem]">
                 Tom Geoghegan
             </h1>
-            <div className="relative mt-12 mx-auto ">
-                <div className=" absolute animate-gradient  h-16 min-w-[65px] bg-gradient-to-r from-primary via-altSecond to-secondary blur-lg" />
-                <button className="text-white rounded-2xl min-w-[64px] min-h-[64px] translate-y-0  text-center items-center bg-bgSecondary">
-                    <BsFillPersonPlusFill className="mx-auto text-[30px] translate-x-0.5 " />
+            <div className="relative mx-auto mt-12 ">
+                <div className="absolute h-16 min-w-[65px] animate-gradient bg-gradient-to-r from-primary via-altSecond to-secondary blur-lg" />
+                <button
+                    type="button"
+                    className="min-h-[64px] min-w-[64px] translate-y-0 items-center rounded-2xl  bg-bgSecondary text-center text-white"
+                >
+                    <BsFillPersonPlusFill className="mx-auto translate-x-0.5 text-[30px] " />
                 </button>
             </div>
         </div>
     );
-};
+}
 
 export default About;

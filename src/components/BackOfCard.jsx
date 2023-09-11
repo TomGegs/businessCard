@@ -1,11 +1,11 @@
-import { AiOutlineDoubleLeft } from "react-icons/ai";
-import IconButtons from "./buttons/IconButtons";
+import { AiOutlineDoubleLeft } from 'react-icons/ai';
+import IconButtons from './buttons/IconButtons';
 
-const BackOfCard = ({ onFlipBack }) => {
+function BackOfCard({ onFlipBack }) {
     return (
         <div className="h-full ">
             <IconButtons
-                noNewTab={true}
+                noNewTab
                 iconName={
                     <AiOutlineDoubleLeft
                         className="animate-pulse"
@@ -13,11 +13,11 @@ const BackOfCard = ({ onFlipBack }) => {
                     />
                 }
             />
-            <div className="flex justify-center align-middle object-center items-center h-full ">
-                <p>Very cheeky to look at my butt</p>
+            <div className="flex h-full items-center justify-center object-center align-middle ">
+                <p>Very cheeky to look back here</p>
             </div>
         </div>
     );
-};
+}
 
 export default BackOfCard;

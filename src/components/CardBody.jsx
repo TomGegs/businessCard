@@ -1,9 +1,9 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef } from 'react';
 
-import BackOfCard from "./BackOfCard";
-import FrontOfCard from "./FrontOfCard";
+import BackOfCard from './BackOfCard';
+import FrontOfCard from './FrontOfCard';
 
-const CardBody = () => {
+function CardBody() {
     const [rotateStyles, setRotateStyles] = useState({
         rotateX: 0,
         rotateY: 0,
@@ -11,9 +11,9 @@ const CardBody = () => {
 
     const [flip, setFlip] = useState(false);
 
-    const [cardHeight, setCardHeight] = useState("initial");
+    const [cardHeight, setCardHeight] = useState('initial');
 
-    //Location tracking
+    // Location tracking
     // Function to update rotation styles based on mouse position or finger movement
     const rotateElement = (event) => {
         const clientX = event.touches
@@ -41,42 +41,36 @@ const CardBody = () => {
     // Add and remove the event listener
     useEffect(() => {
         const eventHandler =
-            "ontouchstart" in window ? "touchmove" : "mousemove";
+            'ontouchstart' in window ? 'touchmove' : 'mousemove';
 
         document.addEventListener(eventHandler, rotateElement);
 
         return () => {
             document.removeEventListener(eventHandler, rotateElement);
         };
-    }, []); //Empty array so effect runs only on mount
+    }, []); // Empty array so effect runs only on mount
 
     // Create a style object with the rotation values
     const rotateStyle = {
-        "--rotateX": `${rotateStyles.rotateX}deg`,
-        "--rotateY": `${rotateStyles.rotateY}deg`,
+        '--rotateX': `${rotateStyles.rotateX}deg`,
+        '--rotateY': `${rotateStyles.rotateY}deg`,
     };
 
     const clickFlip = {
-        "--rotateX": `180deg`,
-        "--rotateY": `0deg`,
-        transition: "transform 1s",
+        '--rotateX': `180deg`,
+        '--rotateY': `0deg`,
+        transition: 'transform 1s',
     };
 
-    // const clickFlipBack = {
-    //     "--rotateX": `-180deg`,
-    //     "--rotateY": `0deg`,
-    //     transition: "transform 1s",
-    // };
-    //style logic for card flip
     const flipStyle = () => {
         if (flip) {
             return clickFlip;
-        } else {
-            return rotateStyle;
         }
+        return rotateStyle;
     };
 
     // Front size of card height adjusts to content and window size and resizes middle and back of card
+
     const frontSide = useRef();
 
     const setHeight = () => {
@@ -86,16 +80,17 @@ const CardBody = () => {
 
     useEffect(setHeight, [frontSide]);
     useEffect(() => {
-        window.addEventListener("resize", setHeight);
-        return () => window.removeEventListener("resize", setHeight);
+        window.addEventListener('resize', setHeight);
+        return () => window.removeEventListener('resize', setHeight);
     }, []);
 
     return (
-        //wrapper
+        // wrapper
         <pre
             tabIndex="0"
             style={{ ...flipStyle(), height: cardHeight }}
-            className={`card font-Unbounded ${flip ? "flip" : ""}`}>
+            className={`card font-Unbounded ${flip ? 'flip' : ''}`}
+        >
             {/* Front of card */}
             <section className="front" ref={frontSide}>
                 <FrontOfCard flipCard={() => setFlip(!flip)} />
@@ -108,6 +103,6 @@ const CardBody = () => {
             </section>
         </pre>
     );
-};
+}
 
 export default CardBody;

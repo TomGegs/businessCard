@@ -1,8 +1,8 @@
-import CardBody from "../../components/CardBody";
+import CardBody from '../../components/CardBody';
 
 const Skill = () => {
     return (
-        <main className="h-full w-full relative items-center mx-auto align-middle object-center flex-col justify-center flex">
+        <main className="relative mx-auto flex h-full w-full flex-col items-center justify-center object-center align-middle">
             <CardBody />
             {/* <section className="relative  mx-auto ">
                 <div className=" absolute animate-gradient h-16 min-w-[65px] bg-gradient-to-r from-primary via-altSecond to-secondary blur-lg" />

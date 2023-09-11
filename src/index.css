@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Alexandria:wght@100;200;300;400;500;600;700;800&family=Candal&family=Capriola&family=Julius+Sans+One&family=Jura:wght@300;400;500;600;700&family=Lalezar&family=Nanum+Pen+Script&family=Poppins:wght@100;200;300;400;500&family=Readex+Pro:wght@200;300;400;500;600;700&family=Syncopate&family=Unbounded:wght@200;300;400;500;600;700;800;900&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Alexandria:wght@100;200;300;400;500;600;700;800&family=Candal&family=Capriola&family=Julius+Sans+One&family=Jura:wght@300;400;500;600;700&family=Lalezar&family=Nanum+Pen+Script&family=Poppins:wght@100;200;300;400;500&family=Readex+Pro:wght@200;300;400;500;600;700&family=Syncopate&family=Unbounded:wght@200;300;400;500;600;700;800;900&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -11,7 +11,7 @@
     --distanceFront: 15px;
     --distanceMiddle: 0px;
     --distanceBack: 15px;
-    font-family: "Unbounded", cursive;
+    font-family: 'Unbounded', cursive;
 }
 
 body {
@@ -44,12 +44,12 @@ body {
 .card.flip {
     --rotateX: 180deg;
     --rotateY: 0deg;
-    transition: "transform 1s";
+    transition: 'transform 1s';
 }
 
 .card::before,
 .card::after {
-    content: "";
+    content: '';
     position: absolute;
     border-radius: inherit;
 }

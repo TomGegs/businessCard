@@ -1,10 +1,10 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom";
-import LandingPage from "./pages/LandingPage";
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import LandingPage from './pages/LandingPage';
 
 function App() {
     return (
         <BrowserRouter>
-            <div className="flex flex-col  w-screen h-screen max-w-[560px] mx-auto">
+            <div className="mx-auto flex  h-screen w-screen max-w-[560px] flex-col">
                 <Routes>
                     <Route path="/" element={<LandingPage />} />
                 </Routes>
